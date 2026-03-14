@@ -10,12 +10,11 @@ import "C"
 // Accbands - Acceleration Bands
 //
 // Input  = High, Low, Close
+//
 // Output = double, double, double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Accbands(high []float64, low []float64, closePrice []float64, timePeriod int, upperBandBuf []float64, middleBandBuf []float64, lowerBandBuf []float64) (outRealUpperBand []float64, outRealMiddleBand []float64, outRealLowerBand []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -48,6 +47,7 @@ func Accbands(high []float64, low []float64, closePrice []float64, timePeriod in
 // Acos - Vector Trigonometric ACos
 //
 // Input  = double
+//
 // Output = double
 func Acos(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -70,6 +70,7 @@ func Acos(in []float64, realBuf []float64) (outReal []float64) {
 // Ad - Chaikin A/D Line
 //
 // Input  = High, Low, Close, Volume
+//
 // Output = double
 func Ad(high []float64, low []float64, closePrice []float64, volume []float64, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
@@ -95,6 +96,7 @@ func Ad(high []float64, low []float64, closePrice []float64, volume []float64, r
 // Add - Vector Arithmetic Add
 //
 // Input  = double, double
+//
 // Output = double
 func Add(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 	if len(in0) == 0 {
@@ -118,15 +120,12 @@ func Add(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 // Adosc - Chaikin A/D Oscillator
 //
 // Input  = High, Low, Close, Volume
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// fastPeriod:(From 2 to 100000)
-// Number of period for the fast MA
-//
-// slowPeriod:(From 2 to 100000)
-// Number of period for the slow MA
+// Parameters:
+//   - fastPeriod (2 to 100000): Number of period for the fast MA
+//   - slowPeriod (2 to 100000): Number of period for the slow MA
 func Adosc(high []float64, low []float64, closePrice []float64, volume []float64, fastPeriod int, slowPeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -153,12 +152,11 @@ func Adosc(high []float64, low []float64, closePrice []float64, volume []float64
 // Adx - Average Directional Movement Index
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Adx(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -183,12 +181,11 @@ func Adx(high []float64, low []float64, closePrice []float64, timePeriod int, re
 // Adxr - Average Directional Movement Index Rating
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Adxr(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -213,18 +210,13 @@ func Adxr(high []float64, low []float64, closePrice []float64, timePeriod int, r
 // Apo - Absolute Price Oscillator
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// fastPeriod:(From 2 to 100000)
-// Number of period for the fast MA
-//
-// slowPeriod:(From 2 to 100000)
-// Number of period for the slow MA
-//
-// mAType:
-// Type of Moving Average
+// Parameters:
+//   - fastPeriod (2 to 100000): Number of period for the fast MA
+//   - slowPeriod (2 to 100000): Number of period for the slow MA
+//   - mAType: Type of Moving Average
 func Apo(in []float64, fastPeriod int, slowPeriod int, mAType int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -249,12 +241,11 @@ func Apo(in []float64, fastPeriod int, slowPeriod int, mAType int, realBuf []flo
 // Aroon - Aroon
 //
 // Input  = High, Low
+//
 // Output = double, double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Aroon(high []float64, low []float64, timePeriod int, aroonDownBuf []float64, aroonUpBuf []float64) (outAroonDown []float64, outAroonUp []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -282,12 +273,11 @@ func Aroon(high []float64, low []float64, timePeriod int, aroonDownBuf []float64
 // Aroonosc - Aroon Oscillator
 //
 // Input  = High, Low
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Aroonosc(high []float64, low []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -311,6 +301,7 @@ func Aroonosc(high []float64, low []float64, timePeriod int, realBuf []float64) 
 // Asin - Vector Trigonometric ASin
 //
 // Input  = double
+//
 // Output = double
 func Asin(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -333,6 +324,7 @@ func Asin(in []float64, realBuf []float64) (outReal []float64) {
 // Atan - Vector Trigonometric ATan
 //
 // Input  = double
+//
 // Output = double
 func Atan(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -355,12 +347,11 @@ func Atan(in []float64, realBuf []float64) (outReal []float64) {
 // Atr - Average True Range
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Atr(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -385,6 +376,7 @@ func Atr(high []float64, low []float64, closePrice []float64, timePeriod int, re
 // Avgprice - Average Price
 //
 // Input  = Open, High, Low, Close
+//
 // Output = double
 func Avgprice(open []float64, high []float64, low []float64, closePrice []float64, realBuf []float64) (outReal []float64) {
 	if len(open) == 0 {
@@ -410,12 +402,11 @@ func Avgprice(open []float64, high []float64, low []float64, closePrice []float6
 // Avgdev - Average Deviation
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Avgdev(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -438,21 +429,14 @@ func Avgdev(in []float64, timePeriod int, realBuf []float64) (outReal []float64)
 // Bbands - Bollinger Bands
 //
 // Input  = double
+//
 // Output = double, double, double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
-//
-// nbDevUp:(From TA_REAL_MIN to TA_REAL_MAX)
-// Deviation multiplier for upper band
-//
-// nbDevDn:(From TA_REAL_MIN to TA_REAL_MAX)
-// Deviation multiplier for lower band
-//
-// mAType:
-// Type of Moving Average
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
+//   - nbDevUp (TA_REAL_MIN to TA_REAL_MAX): Deviation multiplier for upper band
+//   - nbDevDn (TA_REAL_MIN to TA_REAL_MAX): Deviation multiplier for lower band
+//   - mAType: Type of Moving Average
 func Bbands(in []float64, timePeriod int, nbDevUp float64, nbDevDn float64, mAType int, upperBandBuf []float64, middleBandBuf []float64, lowerBandBuf []float64) (outRealUpperBand []float64, outRealMiddleBand []float64, outRealLowerBand []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -486,12 +470,11 @@ func Bbands(in []float64, timePeriod int, nbDevUp float64, nbDevDn float64, mATy
 // Beta - Beta
 //
 // Input  = double, double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Beta(in0 []float64, in1 []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in0) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -515,6 +498,7 @@ func Beta(in0 []float64, in1 []float64, timePeriod int, realBuf []float64) (outR
 // Bop - Balance Of Power
 //
 // Input  = Open, High, Low, Close
+//
 // Output = double
 func Bop(open []float64, high []float64, low []float64, closePrice []float64, realBuf []float64) (outReal []float64) {
 	if len(open) == 0 {
@@ -540,12 +524,11 @@ func Bop(open []float64, high []float64, low []float64, closePrice []float64, re
 // Cci - Commodity Channel Index
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Cci(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -570,6 +553,7 @@ func Cci(high []float64, low []float64, closePrice []float64, timePeriod int, re
 // Cdl2crows - Two Crows
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdl2crows(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -595,6 +579,7 @@ func Cdl2crows(open []float64, high []float64, low []float64, closePrice []float
 // Cdl3blackcrows - Three Black Crows
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdl3blackcrows(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -620,6 +605,7 @@ func Cdl3blackcrows(open []float64, high []float64, low []float64, closePrice []
 // Cdl3inside - Three Inside Up/Down
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdl3inside(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -645,6 +631,7 @@ func Cdl3inside(open []float64, high []float64, low []float64, closePrice []floa
 // Cdl3linestrike - Three-Line Strike
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdl3linestrike(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -670,6 +657,7 @@ func Cdl3linestrike(open []float64, high []float64, low []float64, closePrice []
 // Cdl3outside - Three Outside Up/Down
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdl3outside(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -695,6 +683,7 @@ func Cdl3outside(open []float64, high []float64, low []float64, closePrice []flo
 // Cdl3starsinsouth - Three Stars In The South
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdl3starsinsouth(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -720,6 +709,7 @@ func Cdl3starsinsouth(open []float64, high []float64, low []float64, closePrice 
 // Cdl3whitesoldiers - Three Advancing White Soldiers
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdl3whitesoldiers(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -745,12 +735,11 @@ func Cdl3whitesoldiers(open []float64, high []float64, low []float64, closePrice
 // Cdlabandonedbaby - Abandoned Baby
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// penetration:(From 0 to TA_REAL_MAX)
-// Percentage of penetration of a candle within another candle
+// Parameters:
+//   - penetration (0 to TA_REAL_MAX): Percentage of penetration of a candle within another candle
 func Cdlabandonedbaby(open []float64, high []float64, low []float64, closePrice []float64, penetration float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -776,6 +765,7 @@ func Cdlabandonedbaby(open []float64, high []float64, low []float64, closePrice 
 // Cdladvanceblock - Advance Block
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdladvanceblock(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -801,6 +791,7 @@ func Cdladvanceblock(open []float64, high []float64, low []float64, closePrice [
 // Cdlbelthold - Belt-hold
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlbelthold(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -826,6 +817,7 @@ func Cdlbelthold(open []float64, high []float64, low []float64, closePrice []flo
 // Cdlbreakaway - Breakaway
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlbreakaway(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -851,6 +843,7 @@ func Cdlbreakaway(open []float64, high []float64, low []float64, closePrice []fl
 // Cdlclosingmarubozu - Closing Marubozu
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlclosingmarubozu(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -876,6 +869,7 @@ func Cdlclosingmarubozu(open []float64, high []float64, low []float64, closePric
 // Cdlconcealbabyswall - Concealing Baby Swallow
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlconcealbabyswall(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -901,6 +895,7 @@ func Cdlconcealbabyswall(open []float64, high []float64, low []float64, closePri
 // Cdlcounterattack - Counterattack
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlcounterattack(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -926,12 +921,11 @@ func Cdlcounterattack(open []float64, high []float64, low []float64, closePrice 
 // Cdldarkcloudcover - Dark Cloud Cover
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// penetration:(From 0 to TA_REAL_MAX)
-// Percentage of penetration of a candle within another candle
+// Parameters:
+//   - penetration (0 to TA_REAL_MAX): Percentage of penetration of a candle within another candle
 func Cdldarkcloudcover(open []float64, high []float64, low []float64, closePrice []float64, penetration float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -957,6 +951,7 @@ func Cdldarkcloudcover(open []float64, high []float64, low []float64, closePrice
 // Cdldoji - Doji
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdldoji(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -982,6 +977,7 @@ func Cdldoji(open []float64, high []float64, low []float64, closePrice []float64
 // Cdldojistar - Doji Star
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdldojistar(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1007,6 +1003,7 @@ func Cdldojistar(open []float64, high []float64, low []float64, closePrice []flo
 // Cdldragonflydoji - Dragonfly Doji
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdldragonflydoji(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1032,6 +1029,7 @@ func Cdldragonflydoji(open []float64, high []float64, low []float64, closePrice 
 // Cdlengulfing - Engulfing Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlengulfing(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1057,12 +1055,11 @@ func Cdlengulfing(open []float64, high []float64, low []float64, closePrice []fl
 // Cdleveningdojistar - Evening Doji Star
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// penetration:(From 0 to TA_REAL_MAX)
-// Percentage of penetration of a candle within another candle
+// Parameters:
+//   - penetration (0 to TA_REAL_MAX): Percentage of penetration of a candle within another candle
 func Cdleveningdojistar(open []float64, high []float64, low []float64, closePrice []float64, penetration float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -1088,12 +1085,11 @@ func Cdleveningdojistar(open []float64, high []float64, low []float64, closePric
 // Cdleveningstar - Evening Star
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// penetration:(From 0 to TA_REAL_MAX)
-// Percentage of penetration of a candle within another candle
+// Parameters:
+//   - penetration (0 to TA_REAL_MAX): Percentage of penetration of a candle within another candle
 func Cdleveningstar(open []float64, high []float64, low []float64, closePrice []float64, penetration float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -1119,6 +1115,7 @@ func Cdleveningstar(open []float64, high []float64, low []float64, closePrice []
 // Cdlgapsidesidewhite - Up/Down-gap side-by-side white lines
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlgapsidesidewhite(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1144,6 +1141,7 @@ func Cdlgapsidesidewhite(open []float64, high []float64, low []float64, closePri
 // Cdlgravestonedoji - Gravestone Doji
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlgravestonedoji(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1169,6 +1167,7 @@ func Cdlgravestonedoji(open []float64, high []float64, low []float64, closePrice
 // Cdlhammer - Hammer
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlhammer(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1194,6 +1193,7 @@ func Cdlhammer(open []float64, high []float64, low []float64, closePrice []float
 // Cdlhangingman - Hanging Man
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlhangingman(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1219,6 +1219,7 @@ func Cdlhangingman(open []float64, high []float64, low []float64, closePrice []f
 // Cdlharami - Harami Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlharami(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1244,6 +1245,7 @@ func Cdlharami(open []float64, high []float64, low []float64, closePrice []float
 // Cdlharamicross - Harami Cross Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlharamicross(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1269,6 +1271,7 @@ func Cdlharamicross(open []float64, high []float64, low []float64, closePrice []
 // Cdlhighwave - High-Wave Candle
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlhighwave(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1294,6 +1297,7 @@ func Cdlhighwave(open []float64, high []float64, low []float64, closePrice []flo
 // Cdlhikkake - Hikkake Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlhikkake(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1319,6 +1323,7 @@ func Cdlhikkake(open []float64, high []float64, low []float64, closePrice []floa
 // Cdlhikkakemod - Modified Hikkake Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlhikkakemod(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1344,6 +1349,7 @@ func Cdlhikkakemod(open []float64, high []float64, low []float64, closePrice []f
 // Cdlhomingpigeon - Homing Pigeon
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlhomingpigeon(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1369,6 +1375,7 @@ func Cdlhomingpigeon(open []float64, high []float64, low []float64, closePrice [
 // Cdlidentical3crows - Identical Three Crows
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlidentical3crows(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1394,6 +1401,7 @@ func Cdlidentical3crows(open []float64, high []float64, low []float64, closePric
 // Cdlinneck - In-Neck Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlinneck(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1419,6 +1427,7 @@ func Cdlinneck(open []float64, high []float64, low []float64, closePrice []float
 // Cdlinvertedhammer - Inverted Hammer
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlinvertedhammer(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1444,6 +1453,7 @@ func Cdlinvertedhammer(open []float64, high []float64, low []float64, closePrice
 // Cdlkicking - Kicking
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlkicking(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1469,6 +1479,7 @@ func Cdlkicking(open []float64, high []float64, low []float64, closePrice []floa
 // Cdlkickingbylength - Kicking - bull/bear determined by the longer marubozu
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlkickingbylength(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1494,6 +1505,7 @@ func Cdlkickingbylength(open []float64, high []float64, low []float64, closePric
 // Cdlladderbottom - Ladder Bottom
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlladderbottom(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1519,6 +1531,7 @@ func Cdlladderbottom(open []float64, high []float64, low []float64, closePrice [
 // Cdllongleggeddoji - Long Legged Doji
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdllongleggeddoji(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1544,6 +1557,7 @@ func Cdllongleggeddoji(open []float64, high []float64, low []float64, closePrice
 // Cdllongline - Long Line Candle
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdllongline(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1569,6 +1583,7 @@ func Cdllongline(open []float64, high []float64, low []float64, closePrice []flo
 // Cdlmarubozu - Marubozu
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlmarubozu(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1594,6 +1609,7 @@ func Cdlmarubozu(open []float64, high []float64, low []float64, closePrice []flo
 // Cdlmatchinglow - Matching Low
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlmatchinglow(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1619,12 +1635,11 @@ func Cdlmatchinglow(open []float64, high []float64, low []float64, closePrice []
 // Cdlmathold - Mat Hold
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// penetration:(From 0 to TA_REAL_MAX)
-// Percentage of penetration of a candle within another candle
+// Parameters:
+//   - penetration (0 to TA_REAL_MAX): Percentage of penetration of a candle within another candle
 func Cdlmathold(open []float64, high []float64, low []float64, closePrice []float64, penetration float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -1650,12 +1665,11 @@ func Cdlmathold(open []float64, high []float64, low []float64, closePrice []floa
 // Cdlmorningdojistar - Morning Doji Star
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// penetration:(From 0 to TA_REAL_MAX)
-// Percentage of penetration of a candle within another candle
+// Parameters:
+//   - penetration (0 to TA_REAL_MAX): Percentage of penetration of a candle within another candle
 func Cdlmorningdojistar(open []float64, high []float64, low []float64, closePrice []float64, penetration float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -1681,12 +1695,11 @@ func Cdlmorningdojistar(open []float64, high []float64, low []float64, closePric
 // Cdlmorningstar - Morning Star
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// penetration:(From 0 to TA_REAL_MAX)
-// Percentage of penetration of a candle within another candle
+// Parameters:
+//   - penetration (0 to TA_REAL_MAX): Percentage of penetration of a candle within another candle
 func Cdlmorningstar(open []float64, high []float64, low []float64, closePrice []float64, penetration float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -1712,6 +1725,7 @@ func Cdlmorningstar(open []float64, high []float64, low []float64, closePrice []
 // Cdlonneck - On-Neck Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlonneck(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1737,6 +1751,7 @@ func Cdlonneck(open []float64, high []float64, low []float64, closePrice []float
 // Cdlpiercing - Piercing Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlpiercing(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1762,6 +1777,7 @@ func Cdlpiercing(open []float64, high []float64, low []float64, closePrice []flo
 // Cdlrickshawman - Rickshaw Man
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlrickshawman(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1787,6 +1803,7 @@ func Cdlrickshawman(open []float64, high []float64, low []float64, closePrice []
 // Cdlrisefall3methods - Rising/Falling Three Methods
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlrisefall3methods(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1812,6 +1829,7 @@ func Cdlrisefall3methods(open []float64, high []float64, low []float64, closePri
 // Cdlseparatinglines - Separating Lines
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlseparatinglines(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1837,6 +1855,7 @@ func Cdlseparatinglines(open []float64, high []float64, low []float64, closePric
 // Cdlshootingstar - Shooting Star
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlshootingstar(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1862,6 +1881,7 @@ func Cdlshootingstar(open []float64, high []float64, low []float64, closePrice [
 // Cdlshortline - Short Line Candle
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlshortline(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1887,6 +1907,7 @@ func Cdlshortline(open []float64, high []float64, low []float64, closePrice []fl
 // Cdlspinningtop - Spinning Top
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlspinningtop(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1912,6 +1933,7 @@ func Cdlspinningtop(open []float64, high []float64, low []float64, closePrice []
 // Cdlstalledpattern - Stalled Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlstalledpattern(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1937,6 +1959,7 @@ func Cdlstalledpattern(open []float64, high []float64, low []float64, closePrice
 // Cdlsticksandwich - Stick Sandwich
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlsticksandwich(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1962,6 +1985,7 @@ func Cdlsticksandwich(open []float64, high []float64, low []float64, closePrice 
 // Cdltakuri - Takuri (Dragonfly Doji with very long lower shadow)
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdltakuri(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -1987,6 +2011,7 @@ func Cdltakuri(open []float64, high []float64, low []float64, closePrice []float
 // Cdltasukigap - Tasuki Gap
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdltasukigap(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -2012,6 +2037,7 @@ func Cdltasukigap(open []float64, high []float64, low []float64, closePrice []fl
 // Cdlthrusting - Thrusting Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlthrusting(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -2037,6 +2063,7 @@ func Cdlthrusting(open []float64, high []float64, low []float64, closePrice []fl
 // Cdltristar - Tristar Pattern
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdltristar(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -2062,6 +2089,7 @@ func Cdltristar(open []float64, high []float64, low []float64, closePrice []floa
 // Cdlunique3river - Unique 3 River
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlunique3river(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -2087,6 +2115,7 @@ func Cdlunique3river(open []float64, high []float64, low []float64, closePrice [
 // Cdlupsidegap2crows - Upside Gap Two Crows
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlupsidegap2crows(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -2112,6 +2141,7 @@ func Cdlupsidegap2crows(open []float64, high []float64, low []float64, closePric
 // Cdlxsidegap3methods - Upside/Downside Gap Three Methods
 //
 // Input  = Open, High, Low, Close
+//
 // Output = int
 func Cdlxsidegap3methods(open []float64, high []float64, low []float64, closePrice []float64, integerBuf []int32) (outInteger []int32) {
 	if len(open) == 0 {
@@ -2137,6 +2167,7 @@ func Cdlxsidegap3methods(open []float64, high []float64, low []float64, closePri
 // Ceil - Vector Ceil
 //
 // Input  = double
+//
 // Output = double
 func Ceil(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2159,12 +2190,11 @@ func Ceil(in []float64, realBuf []float64) (outReal []float64) {
 // Cmo - Chande Momentum Oscillator
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Cmo(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2187,12 +2217,11 @@ func Cmo(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Correl - Pearson's Correlation Coefficient (r)
 //
 // Input  = double, double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Correl(in0 []float64, in1 []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in0) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2216,6 +2245,7 @@ func Correl(in0 []float64, in1 []float64, timePeriod int, realBuf []float64) (ou
 // Cos - Vector Trigonometric Cos
 //
 // Input  = double
+//
 // Output = double
 func Cos(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2238,6 +2268,7 @@ func Cos(in []float64, realBuf []float64) (outReal []float64) {
 // Cosh - Vector Trigonometric Cosh
 //
 // Input  = double
+//
 // Output = double
 func Cosh(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2260,12 +2291,11 @@ func Cosh(in []float64, realBuf []float64) (outReal []float64) {
 // Dema - Double Exponential Moving Average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Dema(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2288,6 +2318,7 @@ func Dema(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Div - Vector Arithmetic Div
 //
 // Input  = double, double
+//
 // Output = double
 func Div(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 	if len(in0) == 0 {
@@ -2311,12 +2342,11 @@ func Div(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 // Dx - Directional Movement Index
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Dx(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2341,12 +2371,11 @@ func Dx(high []float64, low []float64, closePrice []float64, timePeriod int, rea
 // Ema - Exponential Moving Average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Ema(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2369,6 +2398,7 @@ func Ema(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Exp - Vector Arithmetic Exp
 //
 // Input  = double
+//
 // Output = double
 func Exp(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2391,6 +2421,7 @@ func Exp(in []float64, realBuf []float64) (outReal []float64) {
 // Floor - Vector Floor
 //
 // Input  = double
+//
 // Output = double
 func Floor(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2413,6 +2444,7 @@ func Floor(in []float64, realBuf []float64) (outReal []float64) {
 // HtDcperiod - Hilbert Transform - Dominant Cycle Period
 //
 // Input  = double
+//
 // Output = double
 func HtDcperiod(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2435,6 +2467,7 @@ func HtDcperiod(in []float64, realBuf []float64) (outReal []float64) {
 // HtDcphase - Hilbert Transform - Dominant Cycle Phase
 //
 // Input  = double
+//
 // Output = double
 func HtDcphase(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2457,6 +2490,7 @@ func HtDcphase(in []float64, realBuf []float64) (outReal []float64) {
 // HtPhasor - Hilbert Transform - Phasor Components
 //
 // Input  = double
+//
 // Output = double, double
 func HtPhasor(in []float64, inPhaseBuf []float64, quadratureBuf []float64) (outInPhase []float64, outQuadrature []float64) {
 	if len(in) == 0 {
@@ -2483,6 +2517,7 @@ func HtPhasor(in []float64, inPhaseBuf []float64, quadratureBuf []float64) (outI
 // HtSine - Hilbert Transform - SineWave
 //
 // Input  = double
+//
 // Output = double, double
 func HtSine(in []float64, sineBuf []float64, leadSineBuf []float64) (outSine []float64, outLeadSine []float64) {
 	if len(in) == 0 {
@@ -2509,6 +2544,7 @@ func HtSine(in []float64, sineBuf []float64, leadSineBuf []float64) (outSine []f
 // HtTrendline - Hilbert Transform - Instantaneous Trendline
 //
 // Input  = double
+//
 // Output = double
 func HtTrendline(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2531,6 +2567,7 @@ func HtTrendline(in []float64, realBuf []float64) (outReal []float64) {
 // HtTrendmode - Hilbert Transform - Trend vs Cycle Mode
 //
 // Input  = double
+//
 // Output = int
 func HtTrendmode(in []float64, integerBuf []int32) (outInteger []int32) {
 	if len(in) == 0 {
@@ -2553,12 +2590,11 @@ func HtTrendmode(in []float64, integerBuf []int32) (outInteger []int32) {
 // Imi - Intraday Momentum Index
 //
 // Input  = Open, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Imi(open []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2582,12 +2618,11 @@ func Imi(open []float64, closePrice []float64, timePeriod int, realBuf []float64
 // Kama - Kaufman Adaptive Moving Average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Kama(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2610,12 +2645,11 @@ func Kama(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Linearreg - Linear Regression
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Linearreg(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2638,12 +2672,11 @@ func Linearreg(in []float64, timePeriod int, realBuf []float64) (outReal []float
 // LinearregAngle - Linear Regression Angle
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func LinearregAngle(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2666,12 +2699,11 @@ func LinearregAngle(in []float64, timePeriod int, realBuf []float64) (outReal []
 // LinearregIntercept - Linear Regression Intercept
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func LinearregIntercept(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2694,12 +2726,11 @@ func LinearregIntercept(in []float64, timePeriod int, realBuf []float64) (outRea
 // LinearregSlope - Linear Regression Slope
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func LinearregSlope(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2722,6 +2753,7 @@ func LinearregSlope(in []float64, timePeriod int, realBuf []float64) (outReal []
 // Ln - Vector Log Natural
 //
 // Input  = double
+//
 // Output = double
 func Ln(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2744,6 +2776,7 @@ func Ln(in []float64, realBuf []float64) (outReal []float64) {
 // Log10 - Vector Log10
 //
 // Input  = double
+//
 // Output = double
 func Log10(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -2766,15 +2799,12 @@ func Log10(in []float64, realBuf []float64) (outReal []float64) {
 // Ma - Moving average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
-//
-// mAType:
-// Type of Moving Average
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
+//   - mAType: Type of Moving Average
 func Ma(in []float64, timePeriod int, mAType int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2798,18 +2828,13 @@ func Ma(in []float64, timePeriod int, mAType int, realBuf []float64) (outReal []
 // Macd - Moving Average Convergence/Divergence
 //
 // Input  = double
+//
 // Output = double, double, double
 //
-// Optional Parameters
-// -------------------
-// fastPeriod:(From 2 to 100000)
-// Number of period for the fast MA
-//
-// slowPeriod:(From 2 to 100000)
-// Number of period for the slow MA
-//
-// signalPeriod:(From 1 to 100000)
-// Smoothing for the signal line (nb of period)
+// Parameters:
+//   - fastPeriod (2 to 100000): Number of period for the fast MA
+//   - slowPeriod (2 to 100000): Number of period for the slow MA
+//   - signalPeriod (1 to 100000): Smoothing for the signal line (nb of period)
 func Macd(in []float64, fastPeriod int, slowPeriod int, signalPeriod int, macdBuf []float64, macdSignalBuf []float64, macdHistBuf []float64) (outMACD []float64, outMACDSignal []float64, outMACDHist []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2842,27 +2867,16 @@ func Macd(in []float64, fastPeriod int, slowPeriod int, signalPeriod int, macdBu
 // Macdext - MACD with controllable MA type
 //
 // Input  = double
+//
 // Output = double, double, double
 //
-// Optional Parameters
-// -------------------
-// fastPeriod:(From 2 to 100000)
-// Number of period for the fast MA
-//
-// fastMAType:
-// Type of Moving Average for fast MA
-//
-// slowPeriod:(From 2 to 100000)
-// Number of period for the slow MA
-//
-// slowMAType:
-// Type of Moving Average for slow MA
-//
-// signalPeriod:(From 1 to 100000)
-// Smoothing for the signal line (nb of period)
-//
-// signalMAType:
-// Type of Moving Average for signal line
+// Parameters:
+//   - fastPeriod (2 to 100000): Number of period for the fast MA
+//   - fastMAType: Type of Moving Average for fast MA
+//   - slowPeriod (2 to 100000): Number of period for the slow MA
+//   - slowMAType: Type of Moving Average for slow MA
+//   - signalPeriod (1 to 100000): Smoothing for the signal line (nb of period)
+//   - signalMAType: Type of Moving Average for signal line
 func Macdext(in []float64, fastPeriod int, fastMAType int, slowPeriod int, slowMAType int, signalPeriod int, signalMAType int, macdBuf []float64, macdSignalBuf []float64, macdHistBuf []float64) (outMACD []float64, outMACDSignal []float64, outMACDHist []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2898,12 +2912,11 @@ func Macdext(in []float64, fastPeriod int, fastMAType int, slowPeriod int, slowM
 // Macdfix - Moving Average Convergence/Divergence Fix 12/26
 //
 // Input  = double
+//
 // Output = double, double, double
 //
-// Optional Parameters
-// -------------------
-// signalPeriod:(From 1 to 100000)
-// Smoothing for the signal line (nb of period)
+// Parameters:
+//   - signalPeriod (1 to 100000): Smoothing for the signal line (nb of period)
 func Macdfix(in []float64, signalPeriod int, macdBuf []float64, macdSignalBuf []float64, macdHistBuf []float64) (outMACD []float64, outMACDSignal []float64, outMACDHist []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2934,15 +2947,12 @@ func Macdfix(in []float64, signalPeriod int, macdBuf []float64, macdSignalBuf []
 // Mama - MESA Adaptive Moving Average
 //
 // Input  = double
+//
 // Output = double, double
 //
-// Optional Parameters
-// -------------------
-// fastLimit:(From 0.01 to 0.99)
-// Upper limit use in the adaptive algorithm
-//
-// slowLimit:(From 0.01 to 0.99)
-// Lower limit use in the adaptive algorithm
+// Parameters:
+//   - fastLimit (0.01 to 0.99): Upper limit use in the adaptive algorithm
+//   - slowLimit (0.01 to 0.99): Lower limit use in the adaptive algorithm
 func Mama(in []float64, fastLimit float64, slowLimit float64, mamaBuf []float64, famaBuf []float64) (outMAMA []float64, outFAMA []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -2970,18 +2980,13 @@ func Mama(in []float64, fastLimit float64, slowLimit float64, mamaBuf []float64,
 // Mavp - Moving average with variable period
 //
 // Input  = double, double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// minPeriod:(From 2 to 100000)
-// Value less than minimum will be changed to Minimum period
-//
-// maxPeriod:(From 2 to 100000)
-// Value higher than maximum will be changed to Maximum period
-//
-// mAType:
-// Type of Moving Average
+// Parameters:
+//   - minPeriod (2 to 100000): Value less than minimum will be changed to Minimum period
+//   - maxPeriod (2 to 100000): Value higher than maximum will be changed to Maximum period
+//   - mAType: Type of Moving Average
 func Mavp(in []float64, periods []float64, minPeriod int, maxPeriod int, mAType int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3007,12 +3012,11 @@ func Mavp(in []float64, periods []float64, minPeriod int, maxPeriod int, mAType 
 // Max - Highest value over a specified period
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Max(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3035,12 +3039,11 @@ func Max(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Maxindex - Index of highest value over a specified period
 //
 // Input  = double
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Maxindex(in []float64, timePeriod int, integerBuf []int32) (outInteger []int32) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3063,6 +3066,7 @@ func Maxindex(in []float64, timePeriod int, integerBuf []int32) (outInteger []in
 // Medprice - Median Price
 //
 // Input  = High, Low
+//
 // Output = double
 func Medprice(high []float64, low []float64, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
@@ -3086,12 +3090,11 @@ func Medprice(high []float64, low []float64, realBuf []float64) (outReal []float
 // Mfi - Money Flow Index
 //
 // Input  = High, Low, Close, Volume
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Mfi(high []float64, low []float64, closePrice []float64, volume []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3117,12 +3120,11 @@ func Mfi(high []float64, low []float64, closePrice []float64, volume []float64, 
 // Midpoint - MidPoint over period
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Midpoint(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3145,12 +3147,11 @@ func Midpoint(in []float64, timePeriod int, realBuf []float64) (outReal []float6
 // Midprice - Midpoint Price over period
 //
 // Input  = High, Low
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Midprice(high []float64, low []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3174,12 +3175,11 @@ func Midprice(high []float64, low []float64, timePeriod int, realBuf []float64) 
 // Min - Lowest value over a specified period
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Min(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3202,12 +3202,11 @@ func Min(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Minindex - Index of lowest value over a specified period
 //
 // Input  = double
+//
 // Output = int
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Minindex(in []float64, timePeriod int, integerBuf []int32) (outInteger []int32) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3230,12 +3229,11 @@ func Minindex(in []float64, timePeriod int, integerBuf []int32) (outInteger []in
 // Minmax - Lowest and highest values over a specified period
 //
 // Input  = double
+//
 // Output = double, double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Minmax(in []float64, timePeriod int, minBuf []float64, maxBuf []float64) (outMin []float64, outMax []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3262,12 +3260,11 @@ func Minmax(in []float64, timePeriod int, minBuf []float64, maxBuf []float64) (o
 // Minmaxindex - Indexes of lowest and highest values over a specified period
 //
 // Input  = double
+//
 // Output = int, int
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Minmaxindex(in []float64, timePeriod int, minIdxBuf []int32, maxIdxBuf []int32) (outMinIdx []int32, outMaxIdx []int32) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3294,12 +3291,11 @@ func Minmaxindex(in []float64, timePeriod int, minIdxBuf []int32, maxIdxBuf []in
 // MinusDi - Minus Directional Indicator
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func MinusDi(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3324,12 +3320,11 @@ func MinusDi(high []float64, low []float64, closePrice []float64, timePeriod int
 // MinusDm - Minus Directional Movement
 //
 // Input  = High, Low
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func MinusDm(high []float64, low []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3353,12 +3348,11 @@ func MinusDm(high []float64, low []float64, timePeriod int, realBuf []float64) (
 // Mom - Momentum
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Mom(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3381,6 +3375,7 @@ func Mom(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Mult - Vector Arithmetic Mult
 //
 // Input  = double, double
+//
 // Output = double
 func Mult(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 	if len(in0) == 0 {
@@ -3404,12 +3399,11 @@ func Mult(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 // Natr - Normalized Average True Range
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Natr(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3434,6 +3428,7 @@ func Natr(high []float64, low []float64, closePrice []float64, timePeriod int, r
 // Obv - On Balance Volume
 //
 // Input  = double, Volume
+//
 // Output = double
 func Obv(in []float64, volume []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -3457,12 +3452,11 @@ func Obv(in []float64, volume []float64, realBuf []float64) (outReal []float64) 
 // PlusDi - Plus Directional Indicator
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func PlusDi(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3487,12 +3481,11 @@ func PlusDi(high []float64, low []float64, closePrice []float64, timePeriod int,
 // PlusDm - Plus Directional Movement
 //
 // Input  = High, Low
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func PlusDm(high []float64, low []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3516,18 +3509,13 @@ func PlusDm(high []float64, low []float64, timePeriod int, realBuf []float64) (o
 // Ppo - Percentage Price Oscillator
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// fastPeriod:(From 2 to 100000)
-// Number of period for the fast MA
-//
-// slowPeriod:(From 2 to 100000)
-// Number of period for the slow MA
-//
-// mAType:
-// Type of Moving Average
+// Parameters:
+//   - fastPeriod (2 to 100000): Number of period for the fast MA
+//   - slowPeriod (2 to 100000): Number of period for the slow MA
+//   - mAType: Type of Moving Average
 func Ppo(in []float64, fastPeriod int, slowPeriod int, mAType int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3552,12 +3540,11 @@ func Ppo(in []float64, fastPeriod int, slowPeriod int, mAType int, realBuf []flo
 // Roc - Rate of change : ((price/prevPrice)-1)*100
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Roc(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3580,12 +3567,11 @@ func Roc(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Rocp - Rate of change Percentage: (price-prevPrice)/prevPrice
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Rocp(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3608,12 +3594,11 @@ func Rocp(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Rocr - Rate of change ratio: (price/prevPrice)
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Rocr(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3636,12 +3621,11 @@ func Rocr(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Rocr100 - Rate of change ratio 100 scale: (price/prevPrice)*100
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Rocr100(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3664,12 +3648,11 @@ func Rocr100(in []float64, timePeriod int, realBuf []float64) (outReal []float64
 // Rsi - Relative Strength Index
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Rsi(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3692,15 +3675,12 @@ func Rsi(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Sar - Parabolic SAR
 //
 // Input  = High, Low
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// acceleration:(From 0 to TA_REAL_MAX)
-// Acceleration Factor used up to the Maximum value
-//
-// maximum:(From 0 to TA_REAL_MAX)
-// Acceleration Factor Maximum value
+// Parameters:
+//   - acceleration (0 to TA_REAL_MAX): Acceleration Factor used up to the Maximum value
+//   - maximum (0 to TA_REAL_MAX): Acceleration Factor Maximum value
 func Sar(high []float64, low []float64, acceleration float64, maximum float64, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3725,33 +3705,18 @@ func Sar(high []float64, low []float64, acceleration float64, maximum float64, r
 // Sarext - Parabolic SAR - Extended
 //
 // Input  = High, Low
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// startValue:(From TA_REAL_MIN to TA_REAL_MAX)
-// Start value and direction. 0 for Auto, >0 for Long, <0 for Short
-//
-// offsetOnReverse:(From 0 to TA_REAL_MAX)
-// Percent offset added/removed to initial stop on short/long reversal
-//
-// accelerationInitLong:(From 0 to TA_REAL_MAX)
-// Acceleration Factor initial value for the Long direction
-//
-// accelerationLong:(From 0 to TA_REAL_MAX)
-// Acceleration Factor for the Long direction
-//
-// accelerationMaxLong:(From 0 to TA_REAL_MAX)
-// Acceleration Factor maximum value for the Long direction
-//
-// accelerationInitShort:(From 0 to TA_REAL_MAX)
-// Acceleration Factor initial value for the Short direction
-//
-// accelerationShort:(From 0 to TA_REAL_MAX)
-// Acceleration Factor for the Short direction
-//
-// accelerationMaxShort:(From 0 to TA_REAL_MAX)
-// Acceleration Factor maximum value for the Short direction
+// Parameters:
+//   - startValue (TA_REAL_MIN to TA_REAL_MAX): Start value and direction. 0 for Auto, >0 for Long, <0 for Short
+//   - offsetOnReverse (0 to TA_REAL_MAX): Percent offset added/removed to initial stop on short/long reversal
+//   - accelerationInitLong (0 to TA_REAL_MAX): Acceleration Factor initial value for the Long direction
+//   - accelerationLong (0 to TA_REAL_MAX): Acceleration Factor for the Long direction
+//   - accelerationMaxLong (0 to TA_REAL_MAX): Acceleration Factor maximum value for the Long direction
+//   - accelerationInitShort (0 to TA_REAL_MAX): Acceleration Factor initial value for the Short direction
+//   - accelerationShort (0 to TA_REAL_MAX): Acceleration Factor for the Short direction
+//   - accelerationMaxShort (0 to TA_REAL_MAX): Acceleration Factor maximum value for the Short direction
 func Sarext(high []float64, low []float64, startValue float64, offsetOnReverse float64, accelerationInitLong float64, accelerationLong float64, accelerationMaxLong float64, accelerationInitShort float64, accelerationShort float64, accelerationMaxShort float64, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3782,6 +3747,7 @@ func Sarext(high []float64, low []float64, startValue float64, offsetOnReverse f
 // Sin - Vector Trigonometric Sin
 //
 // Input  = double
+//
 // Output = double
 func Sin(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -3804,6 +3770,7 @@ func Sin(in []float64, realBuf []float64) (outReal []float64) {
 // Sinh - Vector Trigonometric Sinh
 //
 // Input  = double
+//
 // Output = double
 func Sinh(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -3826,12 +3793,11 @@ func Sinh(in []float64, realBuf []float64) (outReal []float64) {
 // Sma - Simple Moving Average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Sma(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3854,6 +3820,7 @@ func Sma(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Sqrt - Vector Square Root
 //
 // Input  = double
+//
 // Output = double
 func Sqrt(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -3876,15 +3843,12 @@ func Sqrt(in []float64, realBuf []float64) (outReal []float64) {
 // Stddev - Standard Deviation
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
-//
-// nbDev:(From TA_REAL_MIN to TA_REAL_MAX)
-// Nb of deviations
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
+//   - nbDev (TA_REAL_MIN to TA_REAL_MAX): Nb of deviations
 func Stddev(in []float64, timePeriod int, nbDev float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3908,24 +3872,15 @@ func Stddev(in []float64, timePeriod int, nbDev float64, realBuf []float64) (out
 // Stoch - Stochastic
 //
 // Input  = High, Low, Close
+//
 // Output = double, double
 //
-// Optional Parameters
-// -------------------
-// fastK_Period:(From 1 to 100000)
-// Time period for building the Fast-K line
-//
-// slowK_Period:(From 1 to 100000)
-// Smoothing for making the Slow-K line. Usually set to 3
-//
-// slowK_MAType:
-// Type of Moving Average for Slow-K
-//
-// slowD_Period:(From 1 to 100000)
-// Smoothing for making the Slow-D line
-//
-// slowD_MAType:
-// Type of Moving Average for Slow-D
+// Parameters:
+//   - fastK_Period (1 to 100000): Time period for building the Fast-K line
+//   - slowK_Period (1 to 100000): Smoothing for making the Slow-K line. Usually set to 3
+//   - slowK_MAType: Type of Moving Average for Slow-K
+//   - slowD_Period (1 to 100000): Smoothing for making the Slow-D line
+//   - slowD_MAType: Type of Moving Average for Slow-D
 func Stoch(high []float64, low []float64, closePrice []float64, fastK_Period int, slowK_Period int, slowK_MAType int, slowD_Period int, slowD_MAType int, slowKBuf []float64, slowDBuf []float64) (outSlowK []float64, outSlowD []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -3958,18 +3913,13 @@ func Stoch(high []float64, low []float64, closePrice []float64, fastK_Period int
 // Stochf - Stochastic Fast
 //
 // Input  = High, Low, Close
+//
 // Output = double, double
 //
-// Optional Parameters
-// -------------------
-// fastK_Period:(From 1 to 100000)
-// Time period for building the Fast-K line
-//
-// fastD_Period:(From 1 to 100000)
-// Smoothing for making the Fast-D line. Usually set to 3
-//
-// fastD_MAType:
-// Type of Moving Average for Fast-D
+// Parameters:
+//   - fastK_Period (1 to 100000): Time period for building the Fast-K line
+//   - fastD_Period (1 to 100000): Smoothing for making the Fast-D line. Usually set to 3
+//   - fastD_MAType: Type of Moving Average for Fast-D
 func Stochf(high []float64, low []float64, closePrice []float64, fastK_Period int, fastD_Period int, fastD_MAType int, fastKBuf []float64, fastDBuf []float64) (outFastK []float64, outFastD []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4000,21 +3950,14 @@ func Stochf(high []float64, low []float64, closePrice []float64, fastK_Period in
 // Stochrsi - Stochastic Relative Strength Index
 //
 // Input  = double
+//
 // Output = double, double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
-//
-// fastK_Period:(From 1 to 100000)
-// Time period for building the Fast-K line
-//
-// fastD_Period:(From 1 to 100000)
-// Smoothing for making the Fast-D line. Usually set to 3
-//
-// fastD_MAType:
-// Type of Moving Average for Fast-D
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
+//   - fastK_Period (1 to 100000): Time period for building the Fast-K line
+//   - fastD_Period (1 to 100000): Smoothing for making the Fast-D line. Usually set to 3
+//   - fastD_MAType: Type of Moving Average for Fast-D
 func Stochrsi(in []float64, timePeriod int, fastK_Period int, fastD_Period int, fastD_MAType int, fastKBuf []float64, fastDBuf []float64) (outFastK []float64, outFastD []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4044,6 +3987,7 @@ func Stochrsi(in []float64, timePeriod int, fastK_Period int, fastD_Period int, 
 // Sub - Vector Arithmetic Subtraction
 //
 // Input  = double, double
+//
 // Output = double
 func Sub(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 	if len(in0) == 0 {
@@ -4067,12 +4011,11 @@ func Sub(in0 []float64, in1 []float64, realBuf []float64) (outReal []float64) {
 // Sum - Summation
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Sum(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4095,15 +4038,12 @@ func Sum(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // T3 - Triple Exponential Moving Average (T3)
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
-//
-// vFactor:(From 0 to 1)
-// Volume Factor
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
+//   - vFactor (0 to 1): Volume Factor
 func T3(in []float64, timePeriod int, vFactor float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4127,6 +4067,7 @@ func T3(in []float64, timePeriod int, vFactor float64, realBuf []float64) (outRe
 // Tan - Vector Trigonometric Tan
 //
 // Input  = double
+//
 // Output = double
 func Tan(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -4149,6 +4090,7 @@ func Tan(in []float64, realBuf []float64) (outReal []float64) {
 // Tanh - Vector Trigonometric Tanh
 //
 // Input  = double
+//
 // Output = double
 func Tanh(in []float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
@@ -4171,12 +4113,11 @@ func Tanh(in []float64, realBuf []float64) (outReal []float64) {
 // Tema - Triple Exponential Moving Average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Tema(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4199,6 +4140,7 @@ func Tema(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Trange - True Range
 //
 // Input  = High, Low, Close
+//
 // Output = double
 func Trange(high []float64, low []float64, closePrice []float64, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
@@ -4223,12 +4165,11 @@ func Trange(high []float64, low []float64, closePrice []float64, realBuf []float
 // Trima - Triangular Moving Average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Trima(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4251,12 +4192,11 @@ func Trima(in []float64, timePeriod int, realBuf []float64) (outReal []float64) 
 // Trix - 1-day Rate-Of-Change (ROC) of a Triple Smooth EMA
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
 func Trix(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4279,12 +4219,11 @@ func Trix(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Tsf - Time Series Forecast
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Tsf(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4307,6 +4246,7 @@ func Tsf(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 // Typprice - Typical Price
 //
 // Input  = High, Low, Close
+//
 // Output = double
 func Typprice(high []float64, low []float64, closePrice []float64, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
@@ -4331,18 +4271,13 @@ func Typprice(high []float64, low []float64, closePrice []float64, realBuf []flo
 // Ultosc - Ultimate Oscillator
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod1:(From 1 to 100000)
-// Number of bars for 1st period.
-//
-// timePeriod2:(From 1 to 100000)
-// Number of bars fro 2nd period
-//
-// timePeriod3:(From 1 to 100000)
-// Number of bars for 3rd period
+// Parameters:
+//   - timePeriod1 (1 to 100000): Number of bars for 1st period.
+//   - timePeriod2 (1 to 100000): Number of bars fro 2nd period
+//   - timePeriod3 (1 to 100000): Number of bars for 3rd period
 func Ultosc(high []float64, low []float64, closePrice []float64, timePeriod1 int, timePeriod2 int, timePeriod3 int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4369,15 +4304,12 @@ func Ultosc(high []float64, low []float64, closePrice []float64, timePeriod1 int
 // Var - Variance
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 1 to 100000)
-// Number of period
-//
-// nbDev:(From TA_REAL_MIN to TA_REAL_MAX)
-// Nb of deviations
+// Parameters:
+//   - timePeriod (1 to 100000): Number of period
+//   - nbDev (TA_REAL_MIN to TA_REAL_MAX): Nb of deviations
 func Var(in []float64, timePeriod int, nbDev float64, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4401,6 +4333,7 @@ func Var(in []float64, timePeriod int, nbDev float64, realBuf []float64) (outRea
 // Wclprice - Weighted Close Price
 //
 // Input  = High, Low, Close
+//
 // Output = double
 func Wclprice(high []float64, low []float64, closePrice []float64, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
@@ -4425,12 +4358,11 @@ func Wclprice(high []float64, low []float64, closePrice []float64, realBuf []flo
 // Willr - Williams' %R
 //
 // Input  = High, Low, Close
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Willr(high []float64, low []float64, closePrice []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(high) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4455,12 +4387,11 @@ func Willr(high []float64, low []float64, closePrice []float64, timePeriod int, 
 // Wma - Weighted Moving Average
 //
 // Input  = double
+//
 // Output = double
 //
-// Optional Parameters
-// -------------------
-// timePeriod:(From 2 to 100000)
-// Number of period
+// Parameters:
+//   - timePeriod (2 to 100000): Number of period
 func Wma(in []float64, timePeriod int, realBuf []float64) (outReal []float64) {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})

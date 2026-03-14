@@ -517,21 +517,116 @@ func trimBlankLines(lines []string) []string {
 	return lines
 }
 
-// transformDocComment adjusts a raw TA-Lib doc comment for use as a Go doc comment:
+// transformDocComment converts a raw TA-Lib GENCODE SECTION 3 comment into a clean
+// Go doc comment. It:
 //   - Replaces "TA_FUNCNAME - description" with "GoName - description" on the first line.
-//   - Strips the "optIn" prefix from parameter names so they match the Go signature.
+//   - Reformats Input/Output as separate paragraphs.
+//   - Drops the "Optional Parameters / ---" header (redundant).
+//   - Converts each parameter block into a Go-style list item:
+//     "  - paramName (X to Y): description"
 func transformDocComment(comment string, d *FuncDescriptor) string {
 	lines := strings.Split(comment, "\n")
-	if len(lines) > 0 {
-		lines[0] = strings.Replace(lines[0], "TA_"+d.Name+" - ", d.GoName+" - ", 1)
+	if len(lines) == 0 {
+		return comment
 	}
-	for i, line := range lines {
-		lines[i] = reOptIn.ReplaceAllStringFunc(line, func(match string) string {
-			suffix := match[5:] // strip "optIn"
+
+	// Fix first line: replace TA_NAME with Go name.
+	lines[0] = strings.Replace(lines[0], "TA_"+d.Name+" - ", d.GoName+" - ", 1)
+
+	// Collect Input/Output lines and parameter blocks from the rest.
+	var inputOutput []string
+	type param struct{ name, rang, desc string }
+	var params []param
+
+	// Simple state machine over the remaining lines.
+	const (
+		stateHeader = iota // before/between sections
+		stateParams        // inside the parameters section
+	)
+	state := stateHeader
+	var pendingParam *param
+
+	for _, line := range lines[1:] {
+		line = reOptIn.ReplaceAllStringFunc(line, func(match string) string {
+			suffix := match[5:]
 			return strings.ToLower(suffix[:1]) + suffix[1:]
 		})
+		trimmed := strings.TrimSpace(line)
+
+		// Skip blanks, section header, and separator line.
+		if trimmed == "" || trimmed == "Optional Parameters" || trimmed == "-------------------" {
+			if trimmed == "Optional Parameters" {
+				state = stateParams
+			}
+			continue
+		}
+
+		if state == stateHeader {
+			// Input/Output lines.
+			if strings.HasPrefix(trimmed, "Input") || strings.HasPrefix(trimmed, "Output") {
+				inputOutput = append(inputOutput, trimmed)
+			}
+			continue
+		}
+
+		// state == stateParams: alternate between param-name lines and description lines.
+		if pendingParam == nil {
+			// This line is a parameter name, possibly with a range: "timePeriod:(From 2 to 100000)"
+			name, rang := parseParamLine(trimmed)
+			pendingParam = &param{name: name, rang: rang}
+		} else {
+			// This line is the description for the pending parameter.
+			pendingParam.desc = trimmed
+			params = append(params, *pendingParam)
+			pendingParam = nil
+		}
 	}
-	return strings.Join(lines, "\n")
+	// Flush a parameter that had no description line.
+	if pendingParam != nil {
+		params = append(params, *pendingParam)
+	}
+
+	// Assemble the final comment.
+	var out []string
+	out = append(out, lines[0])
+	for _, line := range inputOutput {
+		out = append(out, "", line)
+	}
+	if len(params) > 0 {
+		out = append(out, "", "Parameters:")
+		for _, p := range params {
+			item := "  - " + p.name
+			if p.rang != "" {
+				item += " (" + p.rang + ")"
+			}
+			if p.desc != "" {
+				item += ": " + p.desc
+			}
+			out = append(out, item)
+		}
+	}
+	return strings.Join(out, "\n")
+}
+
+// reFromTo matches "From X to Y" or "From X to Y" range expressions in param lines.
+var reFromTo = regexp.MustCompile(`(?i)From\s+`)
+
+// parseParamLine splits "timePeriod:(From 2 to 100000)" into name="timePeriod" and
+// rang="2 to 100000". Range is empty for params like "mAType:".
+func parseParamLine(line string) (name, rang string) {
+	colon := strings.IndexByte(line, ':')
+	if colon < 0 {
+		return line, ""
+	}
+	name = line[:colon]
+	rest := strings.TrimSpace(line[colon+1:])
+	// Strip surrounding parens if present.
+	rest = strings.TrimPrefix(rest, "(")
+	rest = strings.TrimSuffix(rest, ")")
+	rest = strings.TrimSpace(rest)
+	// Strip leading "From " (case-insensitive).
+	rest = reFromTo.ReplaceAllString(rest, "")
+	return name, rest
 }
 
 // outBufParamName derives a short buffer parameter name from an output GoName.
