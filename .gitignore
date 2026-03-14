@@ -1,0 +1,6 @@
+# Compiled binaries (that Claude keeps dumping here randomly)
+./gen
+
+# Go build cache
+*.test
+*.out
