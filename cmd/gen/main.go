@@ -270,8 +270,8 @@ type Param struct {
 var (
 	// TA_LIB_API prefix is present in v0.6.x headers. Match both with and without it.
 	// Skip TA_S_ variants (single-precision float versions of each function).
-	reFuncStart     = regexp.MustCompile(`(?:TA_LIB_API\s+)?TA_RetCode\s+TA_([A-Z0-9]+)\s*\(`)
-	reLookbackStart = regexp.MustCompile(`(?:TA_LIB_API\s+)?int\s+TA_([A-Z0-9]+)_Lookback\s*\(([^)]*)\)`)
+	reFuncStart     = regexp.MustCompile(`(?:TA_LIB_API\s+)?TA_RetCode\s+TA_([A-Z0-9_]+)\s*\(`)
+	reLookbackStart = regexp.MustCompile(`(?:TA_LIB_API\s+)?int\s+TA_([A-Z0-9_]+?)_Lookback\s*\(([^)]*)\)`)
 	reParamLine     = regexp.MustCompile(`^\s*(const\s+)?(double|TA_Real|TA_Integer|int|TA_MAType)\s+[\*]?(in|optIn|out)([A-Za-z0-9_]+)`)
 )
 
@@ -388,12 +388,18 @@ func normalizeCType(raw string) string {
 	}
 }
 
-// toCamel converts "ADX" → "Adx", "MACD" → "Macd", "MACDFIX" → "Macdfix".
+// toCamel converts "ADX" → "Adx", "MACD" → "Macd", "MINUS_DI" → "MinusDi".
 func toCamel(s string) string {
-	if s == "" {
-		return s
+	parts := strings.Split(s, "_")
+	var b strings.Builder
+	for _, p := range parts {
+		if p == "" {
+			continue
+		}
+		b.WriteString(strings.ToUpper(p[:1]))
+		b.WriteString(strings.ToLower(p[1:]))
 	}
-	return strings.ToUpper(s[:1]) + strings.ToLower(s[1:])
+	return b.String()
 }
 
 // paramGoName converts prefix+suffix to a Go-idiomatic camelCase name.

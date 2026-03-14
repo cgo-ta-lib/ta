@@ -462,6 +462,36 @@ func FloorLookback() int {
 	return int(C.TA_FLOOR_Lookback())
 }
 
+// HtDcperiodLookback returns the number of input values consumed before the first valid output.
+func HtDcperiodLookback() int {
+	return int(C.TA_HT_DCPERIOD_Lookback())
+}
+
+// HtDcphaseLookback returns the number of input values consumed before the first valid output.
+func HtDcphaseLookback() int {
+	return int(C.TA_HT_DCPHASE_Lookback())
+}
+
+// HtPhasorLookback returns the number of input values consumed before the first valid output.
+func HtPhasorLookback() int {
+	return int(C.TA_HT_PHASOR_Lookback())
+}
+
+// HtSineLookback returns the number of input values consumed before the first valid output.
+func HtSineLookback() int {
+	return int(C.TA_HT_SINE_Lookback())
+}
+
+// HtTrendlineLookback returns the number of input values consumed before the first valid output.
+func HtTrendlineLookback() int {
+	return int(C.TA_HT_TRENDLINE_Lookback())
+}
+
+// HtTrendmodeLookback returns the number of input values consumed before the first valid output.
+func HtTrendmodeLookback() int {
+	return int(C.TA_HT_TRENDMODE_Lookback())
+}
+
 // ImiLookback returns the number of input values consumed before the first valid output.
 func ImiLookback(timePeriod int) int {
 	return int(C.TA_IMI_Lookback(C.int(timePeriod)))
@@ -475,6 +505,21 @@ func KamaLookback(timePeriod int) int {
 // LinearregLookback returns the number of input values consumed before the first valid output.
 func LinearregLookback(timePeriod int) int {
 	return int(C.TA_LINEARREG_Lookback(C.int(timePeriod)))
+}
+
+// LinearregAngleLookback returns the number of input values consumed before the first valid output.
+func LinearregAngleLookback(timePeriod int) int {
+	return int(C.TA_LINEARREG_ANGLE_Lookback(C.int(timePeriod)))
+}
+
+// LinearregInterceptLookback returns the number of input values consumed before the first valid output.
+func LinearregInterceptLookback(timePeriod int) int {
+	return int(C.TA_LINEARREG_INTERCEPT_Lookback(C.int(timePeriod)))
+}
+
+// LinearregSlopeLookback returns the number of input values consumed before the first valid output.
+func LinearregSlopeLookback(timePeriod int) int {
+	return int(C.TA_LINEARREG_SLOPE_Lookback(C.int(timePeriod)))
 }
 
 // LnLookback returns the number of input values consumed before the first valid output.
@@ -567,6 +612,16 @@ func MinmaxindexLookback(timePeriod int) int {
 	return int(C.TA_MINMAXINDEX_Lookback(C.int(timePeriod)))
 }
 
+// MinusDiLookback returns the number of input values consumed before the first valid output.
+func MinusDiLookback(timePeriod int) int {
+	return int(C.TA_MINUS_DI_Lookback(C.int(timePeriod)))
+}
+
+// MinusDmLookback returns the number of input values consumed before the first valid output.
+func MinusDmLookback(timePeriod int) int {
+	return int(C.TA_MINUS_DM_Lookback(C.int(timePeriod)))
+}
+
 // MomLookback returns the number of input values consumed before the first valid output.
 func MomLookback(timePeriod int) int {
 	return int(C.TA_MOM_Lookback(C.int(timePeriod)))
@@ -585,6 +640,16 @@ func NatrLookback(timePeriod int) int {
 // ObvLookback returns the number of input values consumed before the first valid output.
 func ObvLookback() int {
 	return int(C.TA_OBV_Lookback())
+}
+
+// PlusDiLookback returns the number of input values consumed before the first valid output.
+func PlusDiLookback(timePeriod int) int {
+	return int(C.TA_PLUS_DI_Lookback(C.int(timePeriod)))
+}
+
+// PlusDmLookback returns the number of input values consumed before the first valid output.
+func PlusDmLookback(timePeriod int) int {
+	return int(C.TA_PLUS_DM_Lookback(C.int(timePeriod)))
 }
 
 // PpoLookback returns the number of input values consumed before the first valid output.

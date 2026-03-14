@@ -4760,6 +4760,308 @@ func Floor(in []float64, outReal []float64) []float64 {
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 // OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func HtDcperiod(in []float64, outReal []float64) []float64 {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_HT_DCPERIOD_Lookback())
+	n := len(in)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_HT_DCPERIOD(0, C.int(n-1),
+		inPtr(in),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func HtDcphase(in []float64, outReal []float64) []float64 {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_HT_DCPHASE_Lookback())
+	n := len(in)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_HT_DCPHASE(0, C.int(n-1),
+		inPtr(in),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func HtPhasor(in []float64, outInPhase []float64, outQuadrature []float64) ([]float64, []float64) {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_HT_PHASOR_Lookback())
+	n := len(in)
+	outInPhase = reuseOrAlloc(outInPhase, n)
+	fillNaN(outInPhase[:lookback])
+	outQuadrature = reuseOrAlloc(outQuadrature, n)
+	fillNaN(outQuadrature[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_HT_PHASOR(0, C.int(n-1),
+		inPtr(in),
+		&begIdx, &nbElem,
+		inPtr(outInPhase[lookback:]),
+		inPtr(outQuadrature[lookback:]))
+	checkRC(rc)
+	fillNaN(outInPhase[lookback+int(nbElem):])
+	fillNaN(outQuadrature[lookback+int(nbElem):])
+	return outInPhase, outQuadrature
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func HtSine(in []float64, outSine []float64, outLeadSine []float64) ([]float64, []float64) {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_HT_SINE_Lookback())
+	n := len(in)
+	outSine = reuseOrAlloc(outSine, n)
+	fillNaN(outSine[:lookback])
+	outLeadSine = reuseOrAlloc(outLeadSine, n)
+	fillNaN(outLeadSine[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_HT_SINE(0, C.int(n-1),
+		inPtr(in),
+		&begIdx, &nbElem,
+		inPtr(outSine[lookback:]),
+		inPtr(outLeadSine[lookback:]))
+	checkRC(rc)
+	fillNaN(outSine[lookback+int(nbElem):])
+	fillNaN(outLeadSine[lookback+int(nbElem):])
+	return outSine, outLeadSine
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func HtTrendline(in []float64, outReal []float64) []float64 {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_HT_TRENDLINE_Lookback())
+	n := len(in)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_HT_TRENDLINE(0, C.int(n-1),
+		inPtr(in),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func HtTrendmode(in []float64, outInteger []int32) []int32 {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_HT_TRENDMODE_Lookback())
+	n := len(in)
+	outInteger = reuseOrAllocInt32(outInteger, n)
+	fillNaNInt32(outInteger[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_HT_TRENDMODE(0, C.int(n-1),
+		inPtr(in),
+		&begIdx, &nbElem,
+		inPtrInt(outInteger[lookback:]))
+	checkRC(rc)
+	fillNaNInt32(outInteger[lookback+int(nbElem):])
+	return outInteger
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 func Imi(open []float64, closePrice []float64, timePeriod int, outReal []float64) []float64 {
 	if len(open) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -4871,6 +5173,156 @@ func Linearreg(in []float64, timePeriod int, outReal []float64) []float64 {
 	fillNaN(outReal[:lookback])
 	var begIdx, nbElem C.int
 	rc := C.TA_LINEARREG(0, C.int(n-1),
+		inPtr(in),
+		C.int(timePeriod),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func LinearregAngle(in []float64, timePeriod int, outReal []float64) []float64 {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_LINEARREG_ANGLE_Lookback(C.int(timePeriod)))
+	n := len(in)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_LINEARREG_ANGLE(0, C.int(n-1),
+		inPtr(in),
+		C.int(timePeriod),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func LinearregIntercept(in []float64, timePeriod int, outReal []float64) []float64 {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_LINEARREG_INTERCEPT_Lookback(C.int(timePeriod)))
+	n := len(in)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_LINEARREG_INTERCEPT(0, C.int(n-1),
+		inPtr(in),
+		C.int(timePeriod),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func LinearregSlope(in []float64, timePeriod int, outReal []float64) []float64 {
+	if len(in) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_LINEARREG_SLOPE_Lookback(C.int(timePeriod)))
+	n := len(in)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_LINEARREG_SLOPE(0, C.int(n-1),
 		inPtr(in),
 		C.int(timePeriod),
 		&begIdx, &nbElem,
@@ -5861,6 +6313,109 @@ func Minmaxindex(in []float64, timePeriod int, outMinIdx []int32, outMaxIdx []in
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 // OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func MinusDi(high []float64, low []float64, closePrice []float64, timePeriod int, outReal []float64) []float64 {
+	if len(high) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_MINUS_DI_Lookback(C.int(timePeriod)))
+	n := len(high)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_MINUS_DI(0, C.int(n-1),
+		inPtr(high),
+		inPtr(low),
+		inPtr(closePrice),
+		C.int(timePeriod),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func MinusDm(high []float64, low []float64, timePeriod int, outReal []float64) []float64 {
+	if len(high) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_MINUS_DM_Lookback(C.int(timePeriod)))
+	n := len(high)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_MINUS_DM(0, C.int(n-1),
+		inPtr(high),
+		inPtr(low),
+		C.int(timePeriod),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 func Mom(in []float64, timePeriod int, outReal []float64) []float64 {
 	if len(in) == 0 {
 		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
@@ -6025,6 +6580,109 @@ func Obv(in []float64, volume []float64, outReal []float64) []float64 {
 	rc := C.TA_OBV(0, C.int(n-1),
 		inPtr(in),
 		inPtr(volume),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func PlusDi(high []float64, low []float64, closePrice []float64, timePeriod int, outReal []float64) []float64 {
+	if len(high) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_PLUS_DI_Lookback(C.int(timePeriod)))
+	n := len(high)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_PLUS_DI(0, C.int(n-1),
+		inPtr(high),
+		inPtr(low),
+		inPtr(closePrice),
+		C.int(timePeriod),
+		&begIdx, &nbElem,
+		inPtr(outReal[lookback:]))
+	checkRC(rc)
+	fillNaN(outReal[lookback+int(nbElem):])
+	return outReal
+}
+
+// TA-LIB Copyright (c) 1999-2024, Mario Fortier
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or
+// without modification, are permitted provided that the following
+// conditions are met:
+//
+//   - Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//
+//   - Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in
+//     the documentation and/or other materials provided with the
+//     distribution.
+//
+//   - Neither name of author nor the names of its contributors
+//     may be used to endorse or promote products derived from this
+//     software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+func PlusDm(high []float64, low []float64, timePeriod int, outReal []float64) []float64 {
+	if len(high) == 0 {
+		panic(&TALibError{RetCode: 2, Message: retCodeMessage(2)})
+	}
+	lookback := int(C.TA_PLUS_DM_Lookback(C.int(timePeriod)))
+	n := len(high)
+	outReal = reuseOrAlloc(outReal, n)
+	fillNaN(outReal[:lookback])
+	var begIdx, nbElem C.int
+	rc := C.TA_PLUS_DM(0, C.int(n-1),
+		inPtr(high),
+		inPtr(low),
+		C.int(timePeriod),
 		&begIdx, &nbElem,
 		inPtr(outReal[lookback:]))
 	checkRC(rc)
