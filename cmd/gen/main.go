@@ -61,11 +61,18 @@ func main() {
 	runCmd("cmake", "-S", tmpDir, "-B", buildDir)
 
 	// Step 3: Copy headers.
+	// include/ gets public headers + all internal headers from src/ subdirectories.
+	// The amalgamation uses #include "internal_header.h" (unqualified), so all
+	// headers must be findable from a single -I path.
 	includeDir := filepath.Join(repoRoot, "include")
 	must(os.MkdirAll(includeDir, 0o755))
 
-	srcInclude := filepath.Join(tmpDir, "include")
-	copyDir(srcInclude, includeDir)
+	copyDir(filepath.Join(tmpDir, "include"), includeDir)
+
+	// Copy internal headers from each src/ subdirectory.
+	for _, sub := range []string{"ta_common", "ta_func", "ta_abstract"} {
+		copyDirGlob(filepath.Join(tmpDir, "src", sub), includeDir, ".h")
+	}
 
 	// Copy ta_config.h from cmake build output.
 	cmakeInclude := filepath.Join(buildDir, "include")
@@ -132,10 +139,20 @@ func runCmd(name string, args ...string) {
 }
 
 func copyDir(src, dst string) {
+	copyDirGlob(src, dst, "")
+}
+
+// copyDirGlob copies files from src to dst, optionally filtering by extension (e.g. ".h").
+func copyDirGlob(src, dst, ext string) {
 	entries, err := os.ReadDir(src)
-	must(err)
+	if err != nil {
+		return // silently skip missing dirs
+	}
 	for _, e := range entries {
 		if e.IsDir() {
+			continue
+		}
+		if ext != "" && !strings.HasSuffix(e.Name(), ext) {
 			continue
 		}
 		data, err := os.ReadFile(filepath.Join(src, e.Name()))
@@ -251,10 +268,15 @@ type Param struct {
 }
 
 var (
-	reFuncStart    = regexp.MustCompile(`^TA_RetCode\s+TA_([A-Z0-9_]+)\s*\(`)
-	reLookbackStart = regexp.MustCompile(`^int\s+TA_([A-Z0-9_]+)_Lookback\s*\((.*)\)`)
-	reParamLine    = regexp.MustCompile(`^\s*(const\s+)?(double|TA_Real|TA_Integer|int|TA_MAType)\s+[\*]?(in|optIn|out)([A-Za-z0-9_]+)`)
+	// TA_LIB_API prefix is present in v0.6.x headers. Match both with and without it.
+	// Skip TA_S_ variants (single-precision float versions of each function).
+	reFuncStart     = regexp.MustCompile(`(?:TA_LIB_API\s+)?TA_RetCode\s+TA_([A-Z0-9]+)\s*\(`)
+	reLookbackStart = regexp.MustCompile(`(?:TA_LIB_API\s+)?int\s+TA_([A-Z0-9]+)_Lookback\s*\(([^)]*)\)`)
+	reParamLine     = regexp.MustCompile(`^\s*(const\s+)?(double|TA_Real|TA_Integer|int|TA_MAType)\s+[\*]?(in|optIn|out)([A-Za-z0-9_]+)`)
 )
+
+// outParamSkip are internal TA-Lib output parameters that are not data arrays.
+var outParamSkip = map[string]bool{"BegIdx": true, "NBElement": true}
 
 func parseTaFuncH(path string) []*FuncDescriptor {
 	f, err := os.Open(path)
@@ -274,6 +296,10 @@ func parseTaFuncH(path string) []*FuncDescriptor {
 		// Lookback signature — always single line in ta_func.h.
 		if m := reLookbackStart.FindStringSubmatch(line); m != nil {
 			name := m[1]
+			// Skip TA_S_ variants (single-precision).
+			if strings.HasPrefix(name, "S_") {
+				continue
+			}
 			sig := strings.TrimSpace(m[2])
 			if d, ok := byName[name]; ok {
 				d.LookbackSig = sig
@@ -284,6 +310,12 @@ func parseTaFuncH(path string) []*FuncDescriptor {
 		// Function start.
 		if m := reFuncStart.FindStringSubmatch(line); m != nil {
 			name := m[1]
+			// Skip TA_S_ variants (single-precision).
+			if strings.HasPrefix(name, "S_") {
+				inFunc = false
+				current = nil
+				continue
+			}
 			if _, seen := byName[name]; !seen {
 				d := &FuncDescriptor{
 					Name:   name,
@@ -298,44 +330,49 @@ func parseTaFuncH(path string) []*FuncDescriptor {
 		}
 
 		if inFunc {
-			// End of function block.
-			if strings.HasPrefix(strings.TrimSpace(line), ");") || strings.TrimSpace(line) == ")" {
+			trimmed := strings.TrimSpace(line)
+
+			// Try to pick up a param from this line first (e.g. "double outReal[] );").
+			if m := reParamLine.FindStringSubmatch(line); m != nil {
+				rawType := m[2]
+				prefix := m[3] // "in", "optIn", "out"
+				suffix := m[4] // e.g. "High", "TimePeriod", "Real"
+
+				if !outParamSkip[suffix] {
+					rawName := prefix + suffix
+					p := Param{
+						CType:  normalizeCType(rawType),
+						Name:   rawName,
+						GoName: paramGoName(prefix, suffix),
+					}
+					switch prefix {
+					case "in":
+						current.Inputs = append(current.Inputs, p)
+					case "optIn":
+						current.OptIns = append(current.OptIns, p)
+					case "out":
+						current.Outputs = append(current.Outputs, p)
+					}
+				}
+			}
+
+			// End of function block: ); on its own line, or the last param line ends with );
+			if strings.HasPrefix(trimmed, ");") || trimmed == ")" ||
+				strings.HasSuffix(trimmed, ");") || strings.HasSuffix(trimmed, ")") {
 				inFunc = false
 				current = nil
-				continue
-			}
-
-			m := reParamLine.FindStringSubmatch(line)
-			if m == nil {
-				continue
-			}
-
-			rawType := m[2]
-			prefix := m[3]   // "in", "optIn", "out"
-			suffix := m[4]   // e.g. "High", "TimePeriod", "Real"
-			rawName := prefix + suffix
-
-			p := Param{
-				CType:  normalizeCType(rawType),
-				Name:   rawName,
-				GoName: paramGoName(prefix, suffix),
-			}
-
-			switch prefix {
-			case "in":
-				current.Inputs = append(current.Inputs, p)
-			case "optIn":
-				current.OptIns = append(current.OptIns, p)
-			case "out":
-				current.Outputs = append(current.Outputs, p)
 			}
 		}
 	}
 	must(scanner.Err())
 
+	// Only keep functions that have at least one output (sanity filter).
 	result := make([]*FuncDescriptor, 0, len(order))
 	for _, name := range order {
-		result = append(result, byName[name])
+		d := byName[name]
+		if len(d.Outputs) > 0 {
+			result = append(result, d)
+		}
 	}
 	return result
 }
@@ -445,7 +482,6 @@ func writeFunctionsGen(path, version string, descs []*FuncDescriptor) {
 	out, err := format.Source(buf.Bytes())
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "warning: functions_gen.go format failed:", err)
-		fmt.Fprintln(os.Stderr, err)
 		out = buf.Bytes()
 	}
 	must(os.WriteFile(path, out, 0o644))

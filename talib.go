@@ -1,7 +1,7 @@
 package ta
 
 /*
-#cgo CFLAGS: -I${SRCDIR}/include -Wno-unused-variable -Wno-unused-function
+#cgo CFLAGS: -I${SRCDIR}/include -Wno-unused-variable -Wno-unused-function -Wno-macro-redefined
 #include "ta_libc.h"
 #include "ta_func.h"
 */
