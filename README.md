@@ -77,7 +77,7 @@ allocations in tight loops.
 
 A sensible set of tests are included, some of them generated.  The objective with the test suite is to provide some decent coverage that provides some proof this thing actually works, while not introducing a significant maintenance burden of trying to exhaustively prove what TA-Lib already implements and handles.
 
-## Maintenenace - Updating TA-Lib
+## Maintenance - Updating TA-Lib
 
 If you wish to do work on this wrapper library or update it, you can:
 
@@ -89,6 +89,28 @@ If you wish to do work on this wrapper library or update it, you can:
 The `go generate` step requires additional tooling including CMake and `uv`.  It will download the TA-Lib source and (re)generate the various function wrappers and test code.  Python (handled via `uv`) is used to generate sample outputs using it's own TA-Lib bindings which we then verify in Go tests.
 
 Note that it's always possible some structural change in a new TA-Lib version will require the generator code to be updated.  YMMV.
+
+## Versioning
+
+This module uses its own semver sequence independent of TA-Lib's version numbering. The embedded TA-Lib version is available at runtime via the `TALibVersion` constant and is the single source of truth in the `//go:generate` directive in `talib.go`. (The reasoning: mirroring TA-Lib versions (e.g. `v0.6.4`) leaves no room for Go-side fixes without inventing non-standard version suffixes.)
+
+To release a new version:
+
+1. Edit the version in the `//go:generate` line in `talib.go`:
+   ```go
+   //go:generate go run ./cmd/gen v0.7.0
+   ```
+2. Run codegen and tests:
+   ```bash
+   go generate
+   go test -v -count=1 ./...
+   ```
+3. Commit all regenerated files (`include/`, `talib_amalgamation.c`, `*_gen.go`).
+4. Tag a new minor version noting the TA-Lib bump:
+   ```bash
+   git tag -a v0.2.0 -m "Update to TA-Lib v0.7.0"
+   git push origin v0.2.0
+   ```
 
 ## Repository structure
 
@@ -104,6 +126,7 @@ cgo-ta-lib/ta
 ├── errors_gen.go             retCodeMessages map (from ta_retcode.csv)
 ├── functions_gen.go          Go wrapper for every TA-Lib indicator
 ├── lookback_gen.go           XxxLookback() companion for every indicator
+├── version_gen.go            TALibVersion constant
 │
 │   # Test files
 ├── talib_test.go             Shape/invariant/behavior tests (no fixtures needed)
