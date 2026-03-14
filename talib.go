@@ -12,6 +12,7 @@ import (
 )
 
 //go:generate go run ./cmd/gen v0.6.4
+//go:generate uv run ./scripts/gen_fixtures.py
 
 func init() {
 	if rc := C.TA_Initialize(); rc != C.TA_SUCCESS {
