@@ -79,7 +79,7 @@ A sensible set of tests are included, some of them generated.  The objective wit
 
 ## Maintenenace - Updating TA-Lib
 
-If you wish to do workon this wrapper library or update it, you can:
+If you wish to do work on this wrapper library or update it, you can:
 
 - Edit the version tag in the `//go:generate` directive in `talib.go` as needed.
 - Run `go generate` from the repository root.
