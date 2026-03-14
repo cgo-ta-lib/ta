@@ -107,8 +107,7 @@ func main() {
 	taFuncH := filepath.Join(includeDir, "ta_func.h")
 	funcDescs := parseTaFuncH(taFuncH)
 
-	taFuncDir := filepath.Join(tmpDir, "src", "ta_func")
-	extractDocComments(funcDescs, taFuncDir)
+	extractDocComments(funcDescs, amalgPath)
 
 	// Step 8: Generate functions_gen.go.
 	fmt.Println("Generating functions_gen.go...")
@@ -273,6 +272,10 @@ var (
 	reFuncStart     = regexp.MustCompile(`(?:TA_LIB_API\s+)?TA_RetCode\s+TA_([A-Z0-9_]+)\s*\(`)
 	reLookbackStart = regexp.MustCompile(`(?:TA_LIB_API\s+)?int\s+TA_([A-Z0-9_]+?)_Lookback\s*\(([^)]*)\)`)
 	reParamLine     = regexp.MustCompile(`^\s*(const\s+)?(double|TA_Real|TA_Integer|int|TA_MAType)\s+[\*]?(in|optIn|out)([A-Za-z0-9_]+)`)
+	// reDocLine matches the function-description line inside a GENCODE SECTION 3 comment block.
+	reDocLine = regexp.MustCompile(`^\s*\*\s+TA_([A-Z0-9_]+)\s+-\s+`)
+	// reOptIn matches optIn-prefixed parameter names in doc comment text.
+	reOptIn = regexp.MustCompile(`optIn([A-Z][A-Za-z0-9]*)`)
 )
 
 // outParamSkip are internal TA-Lib output parameters that are not data arrays.
@@ -439,38 +442,132 @@ func paramGoName(prefix, suffix string) string {
 
 // --- Doc comment extraction ---
 
-var reBlockComment = regexp.MustCompile(`(?s)/\*.*?\*/`)
-
-func extractDocComments(descs []*FuncDescriptor, taFuncDir string) {
-	for _, d := range descs {
-		path := filepath.Join(taFuncDir, "ta_"+strings.ToLower(d.Name)+".c")
-		data, err := os.ReadFile(path)
-		if err != nil {
-			continue
-		}
-		m := reBlockComment.Find(data)
-		if m == nil {
-			continue
-		}
-		// Strip delimiters and leading * on each line.
-		body := string(m)
-		body = strings.TrimPrefix(body, "/*")
-		body = strings.TrimSuffix(body, "*/")
-		var lines []string
-		for _, line := range strings.Split(body, "\n") {
-			line = strings.TrimPrefix(strings.TrimSpace(line), "* ")
-			line = strings.TrimPrefix(line, "*")
-			lines = append(lines, line)
-		}
-		// Trim leading/trailing blank lines.
-		for len(lines) > 0 && strings.TrimSpace(lines[0]) == "" {
-			lines = lines[1:]
-		}
-		for len(lines) > 0 && strings.TrimSpace(lines[len(lines)-1]) == "" {
-			lines = lines[:len(lines)-1]
-		}
-		d.DocComment = strings.Join(lines, "\n")
+// extractDocComments reads the amalgamation and finds the GENCODE SECTION 3 comment block
+// for each function. These blocks contain the human-readable Input/Output/Parameters
+// description and are identified by the pattern "* TA_FUNCNAME - description".
+func extractDocComments(descs []*FuncDescriptor, amalgPath string) {
+	data, err := os.ReadFile(amalgPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "warning: could not read amalgamation for doc comments: %v\n", err)
+		return
 	}
+	comments := parseDocComments(string(data))
+	for _, d := range descs {
+		if c, ok := comments[d.Name]; ok {
+			d.DocComment = transformDocComment(c, d)
+		}
+	}
+}
+
+// parseDocComments scans the amalgamation source for standalone /* ... */ blocks that
+// contain a "* TA_FUNCNAME - description" line (the GENCODE SECTION 3 doc blocks).
+// Returns a map from TA-Lib function name (e.g. "ACCBANDS") to cleaned comment body.
+func parseDocComments(src string) map[string]string {
+	result := map[string]string{}
+	lines := strings.Split(src, "\n")
+	n := len(lines)
+	for i := 0; i < n; i++ {
+		// Look for a standalone "/*" that opens a doc block.
+		if strings.TrimSpace(lines[i]) != "/*" {
+			continue
+		}
+		blockStart := i + 1
+		funcName := ""
+		j := blockStart
+		for j < n {
+			t := strings.TrimSpace(lines[j])
+			if t == "*/" {
+				break
+			}
+			if m := reDocLine.FindStringSubmatch(lines[j]); m != nil && funcName == "" {
+				funcName = m[1]
+			}
+			j++
+		}
+		if funcName != "" {
+			var cleaned []string
+			for k := blockStart; k < j; k++ {
+				cleaned = append(cleaned, cleanCommentLine(lines[k]))
+			}
+			result[funcName] = strings.Join(trimBlankLines(cleaned), "\n")
+		}
+		i = j // skip to closing */
+	}
+	return result
+}
+
+// cleanCommentLine strips the leading " * " or " *" from a C block comment line
+// and trims any remaining leading/trailing whitespace.
+func cleanCommentLine(line string) string {
+	s := strings.TrimLeft(line, " \t")
+	if after, ok := strings.CutPrefix(s, "* "); ok {
+		return strings.TrimSpace(after)
+	}
+	return strings.TrimSpace(strings.TrimPrefix(s, "*"))
+}
+
+// trimBlankLines removes leading and trailing empty lines from a slice.
+func trimBlankLines(lines []string) []string {
+	for len(lines) > 0 && strings.TrimSpace(lines[0]) == "" {
+		lines = lines[1:]
+	}
+	for len(lines) > 0 && strings.TrimSpace(lines[len(lines)-1]) == "" {
+		lines = lines[:len(lines)-1]
+	}
+	return lines
+}
+
+// transformDocComment adjusts a raw TA-Lib doc comment for use as a Go doc comment:
+//   - Replaces "TA_FUNCNAME - description" with "GoName - description" on the first line.
+//   - Strips the "optIn" prefix from parameter names so they match the Go signature.
+func transformDocComment(comment string, d *FuncDescriptor) string {
+	lines := strings.Split(comment, "\n")
+	if len(lines) > 0 {
+		lines[0] = strings.Replace(lines[0], "TA_"+d.Name+" - ", d.GoName+" - ", 1)
+	}
+	for i, line := range lines {
+		lines[i] = reOptIn.ReplaceAllStringFunc(line, func(match string) string {
+			suffix := match[5:] // strip "optIn"
+			return strings.ToLower(suffix[:1]) + suffix[1:]
+		})
+	}
+	return strings.Join(lines, "\n")
+}
+
+// outBufParamName derives a short buffer parameter name from an output GoName.
+// e.g. "outMACD" → "macdBuf", "outRealUpperBand" → "upperBandBuf", "outAroonDown" → "aroonDownBuf".
+func outBufParamName(goName string) string {
+	s := goName
+	// Strip "out" prefix.
+	s = strings.TrimPrefix(s, "out")
+	// Strip "Real" prefix if followed by an uppercase letter (it's a filler word, not semantic).
+	if strings.HasPrefix(s, "Real") && len(s) > 4 && s[4] >= 'A' && s[4] <= 'Z' {
+		s = s[4:]
+	}
+	if s == "" {
+		return goName + "Buf"
+	}
+	// Find the leading uppercase run.
+	i := 0
+	for i < len(s) && s[i] >= 'A' && s[i] <= 'Z' {
+		i++
+	}
+	var base string
+	switch {
+	case i == 0:
+		base = s
+	case i == len(s):
+		// All uppercase (e.g. "MACD") — fully lowercase.
+		base = strings.ToLower(s)
+	case i == 1:
+		// Single leading uppercase (e.g. "UpperBand") — lowercase first char.
+		base = strings.ToLower(s[:1]) + s[1:]
+	default:
+		// Mixed run (e.g. "MACDSignal", "MACDHist") — lowercase all but the last
+		// uppercase char, which starts the next CamelCase word.
+		base = strings.ToLower(s[:i-1]) + s[i-1:]
+	}
+	return base + "Buf"
 }
 
 // --- Code generation ---
@@ -549,34 +646,25 @@ func writeFunc(w *bytes.Buffer, d *FuncDescriptor) {
 		params = append(params, fmt.Sprintf("%s %s", p.GoName, goType))
 	}
 
-	// Output buffer params (one per output).
+	// Output buffer params — always use shortened buf names to allow named returns.
 	for _, p := range d.Outputs {
 		goType := "[]float64"
 		if p.CType == "int" {
 			goType = "[]int32"
 		}
-		params = append(params, fmt.Sprintf("%s %s", p.GoName, goType))
+		params = append(params, fmt.Sprintf("%s %s", outBufParamName(p.GoName), goType))
 	}
 
-	// Return types — always unnamed to avoid conflicts with same-named params.
-	var retTypes []string
+	// Named return types — always named for documentation clarity.
+	var retParts []string
 	for _, p := range d.Outputs {
 		goType := "[]float64"
 		if p.CType == "int" {
 			goType = "[]int32"
 		}
-		retTypes = append(retTypes, goType)
+		retParts = append(retParts, fmt.Sprintf("%s %s", p.GoName, goType))
 	}
-
-	retStr := ""
-	switch len(retTypes) {
-	case 0:
-		// shouldn't happen
-	case 1:
-		retStr = " " + retTypes[0]
-	default:
-		retStr = " (" + strings.Join(retTypes, ", ") + ")"
-	}
+	retStr := " (" + strings.Join(retParts, ", ") + ")"
 
 	fmt.Fprintf(w, "func %s(%s)%s {\n", d.GoName, strings.Join(params, ", "), retStr)
 
@@ -596,9 +684,8 @@ func writeFunc(w *bytes.Buffer, d *FuncDescriptor) {
 	}
 
 	// Allocate output buffers.
-	for i, p := range d.Outputs {
-		_ = i
-		fmt.Fprintf(w, "\t%s = reuseOrAlloc%s(%s, n)\n", p.GoName, allocSuffix(p.CType), p.GoName)
+	for _, p := range d.Outputs {
+		fmt.Fprintf(w, "\t%s = reuseOrAlloc%s(%s, n)\n", p.GoName, allocSuffix(p.CType), outBufParamName(p.GoName))
 		fmt.Fprintf(w, "\tfillNaN%s(%s[:lookback])\n", nanSuffix(p.CType), p.GoName)
 	}
 
