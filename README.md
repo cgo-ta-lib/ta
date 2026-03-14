@@ -156,8 +156,23 @@ cgo-ta-lib/ta
         └── main.go           Clones TA-Lib, runs cmake, builds amalgamation,
                               generates *_gen.go files; invoked via go generate
 
-    # Python fixture generator (requires uv)
+    # Python fixture generator and benchmarks (require uv)
 └── scripts/
-    └── gen_fixtures.py       Generates testdata/ using Python ta-lib as an
-                              independent reference; invoked via go generate
+    ├── gen_fixtures.py       Generates testdata/ using Python ta-lib as an
+    │                         independent reference; invoked via go generate
+    └── bench.py              Python benchmark counterpart for perf comparison
+```
+
+## Performance
+
+Since both this library and Python's `ta-lib` package wrap the same C code, per-call performance should be equivalent. This was verified on Apple M1 Max with SMA, MACD, and ATR at 1k and 100k bars — Go with buffer reuse and Python were within noise of each other at every size. At 100k bars both are purely measuring the C library.
+
+To reproduce:
+
+```bash
+# Go
+go test -bench=. -benchmem -benchtime=3s -run='^$'
+
+# Python (requires uv)
+uv run ./scripts/bench.py
 ```
