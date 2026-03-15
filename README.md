@@ -53,7 +53,18 @@ validResult := result[lb:] // only valid (non-NaN) values
 
 ## Platform support
 
-Requires CGO. Tested on macOS and Linux. Windows support (MinGW) is planned but untested.
+Requires CGO. Tested on macOS, Linux, and Windows 11 (MSYS2/GCC).
+
+### Windows setup (MSYS2)
+
+1. Download and install [MSYS2](https://www.msys2.org).
+2. From the MSYS2 terminal, install GCC and Go:
+   ```
+   pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-go
+   ```
+3. Use your project as normal — `go build` and `go test` work out of the box.
+
+Or feel free to try using other C compilers, untested but might work just fine.
 
 ## Rationale
 
