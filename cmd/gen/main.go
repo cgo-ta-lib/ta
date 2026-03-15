@@ -178,6 +178,10 @@ func buildAmalgamation(tmpDir, outPath, version string) {
 		sort.Strings(entries)
 		for _, path := range entries {
 			fmt.Fprintf(&buf, "// --- %s ---\n", filepath.Base(path))
+			// Each ta_func file redefines TA_PREFIX and INPUT_TYPE. Undef first to
+			// prevent redefinition warnings across the concatenated translation unit.
+			// #undef on an undefined macro is a no-op, so this is safe everywhere.
+			buf.WriteString("#undef TA_PREFIX\n#undef INPUT_TYPE\n")
 			data, err := os.ReadFile(path)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "warning: could not read %s: %v\n", path, err)
