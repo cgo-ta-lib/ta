@@ -1,12 +1,16 @@
-# cgo-ta-lib
+# ta-lib-cgo
 
 Go bindings for [TA-Lib](https://github.com/TA-Lib/ta-lib) that embed the C source directly —
 no system library installation required. Users need only `go get`.  A working CGO environment is the only requirement, works out of the box with typical Go toolchain installations.
 
+> **Note:** The maintainers of TA-Lib have graciously accepted this project under the official
+> TA-Lib GitHub organization. The import path has changed to `github.com/TA-Lib/ta-lib-cgo`
+> and this is the canonical location going forward.
+
 ## Quick start
 
 ```go
-import ta "github.com/cgo-ta-lib/ta"
+import ta "github.com/TA-Lib/ta-lib-cgo"
 
 // SMA over 10 prices with a 3-bar period.
 prices := []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
@@ -126,7 +130,7 @@ To release a new version:
 ## Repository structure
 
 ```
-cgo-ta-lib/ta
+ta-lib-cgo
 │
 │   # Hand-written, committed once
 ├── talib.go                  CGO directives, init(), buffer/pointer helpers

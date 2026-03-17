@@ -5,7 +5,7 @@ import (
 	"math"
 	"testing"
 
-	ta "github.com/cgo-ta-lib/ta"
+	ta "github.com/TA-Lib/ta-lib-cgo"
 )
 
 // makeClose generates a sine-wave close price series of length n.

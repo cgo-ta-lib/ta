@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	ta "github.com/cgo-ta-lib/ta"
+	ta "github.com/TA-Lib/ta-lib-cgo"
 )
 
 // prices is a synthetic input with enough bars to exercise all lookback periods.

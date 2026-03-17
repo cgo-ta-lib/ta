@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"testing"
 
-	ta "github.com/cgo-ta-lib/ta"
+	ta "github.com/TA-Lib/ta-lib-cgo"
 )
 
 // testdataDir returns the path to testdata/ relative to this file.
